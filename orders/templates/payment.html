@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment</title>
+</head>
+<body>
+
+<h2>Payment Page</h2>
+
+{% for order in orders %}
+
+<p><strong>Customer:</strong> {{ order.customer_name }}</p>
+<p><strong>Product:</strong> {{ order.product_name }}</p>
+<p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="order_id" value="{{ order.id }}">
+
+    <button type="submit">
+        Pay Now
+    </button>
+</form>
+
+<hr>
+
+{% endfor %}
+
+</body>
+</html>
