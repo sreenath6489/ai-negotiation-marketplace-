@@ -1,0 +1,38 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+
+<h1>Notifications</h1>
+
+<table border="1" cellpadding="12" cellspacing="0" width="100%" style="background:white;border-collapse:collapse;">
+    <tr style="background:#1f2937;color:white;">
+        <th>Title</th>
+        <th>Message</th>
+        <th>Status</th>
+        <th>Date</th>
+    </tr>
+
+    {% for n in notifications %}
+    <tr>
+        <td>{{ n.title }}</td>
+        <td>{{ n.message }}</td>
+        <td>
+            {% if n.is_read %}
+                Read
+            {% else %}
+                Unread
+            {% endif %}
+        </td>
+        <td>{{ n.created_at }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No notifications found.</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

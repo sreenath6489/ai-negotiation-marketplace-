@@ -1,0 +1,32 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Seller Dashboard{% endblock %}
+
+{% block content %}
+
+<h1>Seller Dashboard</h1>
+<p>Welcome, {{ request.user.username }}</p>
+
+<div class="cards">
+    <div class="card">
+        <h2>{{ total_negotiations }}</h2>
+        <p>Total Negotiations</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ active_negotiations }}</h2>
+        <p>Active Negotiations</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ accepted_deals }}</h2>
+        <p>Accepted Deals</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ unread_notifications }}</h2>
+        <p>Unread Notifications</p>
+    </div>
+</div>
+
+{% endblock %}

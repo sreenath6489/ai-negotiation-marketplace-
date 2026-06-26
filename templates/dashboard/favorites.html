@@ -1,0 +1,29 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Favorites{% endblock %}
+
+{% block content %}
+
+<h1>Favorite Products</h1>
+
+<table border="1" cellpadding="12" cellspacing="0" width="100%" style="background:white; border-collapse:collapse;">
+    <tr style="background:#1f2937; color:white;">
+        <th>Product</th>
+        <th>Price</th>
+        <th>Added Date</th>
+    </tr>
+
+    {% for f in favorites %}
+    <tr>
+        <td>{{ f.product.name }}</td>
+        <td>₹{{ f.product.price }}</td>
+        <td>{{ f.created_at }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">No favorite products found.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

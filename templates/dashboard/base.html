@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI Negotiation Marketplace{% endblock %}</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#f4f6f9;
+        }
+
+        .navbar{
+            width:100%;
+            background:#1f2937;
+            color:white;
+            padding:18px 30px;
+            font-size:22px;
+            font-weight:bold;
+        }
+
+        .sidebar{
+            width:240px;
+            height:100vh;
+            background:#111827;
+            position:fixed;
+            top:60px;
+            left:0;
+        }
+
+        .sidebar a{
+            display:block;
+            color:white;
+            text-decoration:none;
+            padding:18px 25px;
+            border-bottom:1px solid #374151;
+        }
+
+        .sidebar a:hover{
+            background:#2563eb;
+        }
+
+        .content{
+            margin-left:260px;
+            padding:30px;
+        }
+
+        .cards{
+            display:flex;
+            gap:20px;
+            flex-wrap:wrap;
+        }
+
+        .card{
+            width:220px;
+            background:white;
+            padding:25px;
+            border-radius:12px;
+            box-shadow:0 5px 12px rgba(0,0,0,.12);
+            text-align:center;
+        }
+
+        .card h2{
+            color:#2563eb;
+            font-size:38px;
+            margin-bottom:10px;
+        }
+
+        .card p{
+            color:#555;
+        }
+    </style>
+
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+
+<div class="navbar">
+    AI Negotiation Marketplace
+</div>
+
+<div class="sidebar">
+    <a href="/api/dashboard/buyer-page/">🏠 Buyer Dashboard</a>
+    <a href="/api/dashboard/seller-page/">🏪 Seller Dashboard</a>
+    <a href="/api/dashboard/negotiations-page/">🤝 My Negotiations</a>
+   <a href="/api/dashboard/favorites-page/">❤️ Favorites</a>
+    <a href="/api/dashboard/notifications-page/">🔔 Notifications</a>
+</div>
+
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>
