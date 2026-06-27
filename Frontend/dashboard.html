@@ -1,139 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BargainAI</title>
-<link rel="stylesheet" href="dashboard.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BargainAI</title>
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 
 <body>
 
-<nav class="navbar">
+    <nav class="navbar">
 
-    <div class="logo">
-        🤝 BargainAI
-    </div>
-
-    <div class="nav-links">
-        <a href="profile-setup.html">
-            <button class="sell-btn">Marketplace</button>
-        </a>
-        
-        <a href="buyer-negotiator.html">
-            <button class="sell-btn">My negotiations</button>
-        </a>
-
-       <a href="sell-item.html">
-        <button class="sell-btn">
-            + Sell Item
-        </button>
-        </a>
-
-        <button class="logout-btn">Sign In</button>
-    </div>
-
-</nav>
-
-<section class="hero">
-
-    <div class="hero-left">
-
-        <h1>
-            Autonomous AI
-            Negotiation Marketplace
-        </h1>
-
-        <p>
-            Welcome to BargainAI. Post your listings,
-            browse goods, and let intelligent AI agents
-            negotiate prices, shipping, and logistics
-            on your behalf.
-        </p>
-
-        <input type="text"
-        placeholder="🔍 Search listing (e.g. iPhone, PlayStation...)">
-
-    </div>
-
-    <div class="hero-right">
-
-        <div class="chat-header">
-            Live Arena Preview
-            <span>ACTIVE CHAT</span>
+        <div class="logo">
+            🤝 BargainAI
         </div>
 
-        <div class="buyer-chat">
-            "Since my client is picking it up today,
-            would you accept ₹40,000?"
+        <div class="nav-links">
+            <a href="profile-setup.html">
+                <button class="sell-btn">Marketplace</button>
+            </a>
+
+            <a href="buyer-negotiator.html">
+                <button class="sell-btn">My negotiations</button>
+            </a>
+
+            <a href="sell-item.html">
+                <button class="sell-btn">
+                    + Sell Item
+                </button>
+            </a>
+
+            <span id="user-display"
+                style="color: white; margin-right: 15px; display: none; font-size: 14px; font-weight: 500; vertical-align: middle;"></span>
+            <button class="logout-btn" onclick="handleAuthClick()" id="auth-btn">
+                Sign In
+            </button>
         </div>
 
-        <div class="seller-chat">
-            "We appreciate the quick pickup!
-            The lowest my client will go is ₹43,000."
+    </nav>
+
+    <section class="hero">
+
+        <div class="hero-left">
+
+            <h1>
+                Autonomous AI
+                Negotiation Marketplace
+            </h1>
+
+            <p>
+                Welcome to BargainAI. Post your listings,
+                browse goods, and let intelligent AI agents
+                negotiate prices, shipping, and logistics
+                on your behalf.
+            </p>
+
+            <input type="text" placeholder="🔍 Search listing (e.g. iPhone, PlayStation...)">
+
         </div>
 
-        <div class="agreement">
-            Probability of Agreement
-            <strong>78% Match</strong>
+        <div class="hero-right">
+
+            <div class="chat-header">
+                Live Arena Preview
+                <span>ACTIVE CHAT</span>
+            </div>
+
+            <div class="buyer-chat">
+                "Since my client is picking it up today,
+                would you accept ₹40,000?"
+            </div>
+
+            <div class="seller-chat">
+                "We appreciate the quick pickup!
+                The lowest my client will go is ₹43,000."
+            </div>
+
+            <div class="agreement">
+                Probability of Agreement
+                <strong>78% Match</strong>
+            </div>
+
         </div>
+
+    </section>
+
+    <div class="categories">
+
+        <button class="active" onclick="selectCategory(this)">All</button>
+        <button onclick="selectCategory(this)">Electronics</button>
+        <button onclick="selectCategory(this)">Vehicles</button>
+        <button onclick="selectCategory(this)">Fashion</button>
+        <button onclick="selectCategory(this)">Home Goods</button>
+        <button onclick="selectCategory(this)">Sports</button>
+        <button onclick="selectCategory(this)">Other</button>
 
     </div>
 
-</section>
+    <br>
 
-<div class="categories">
+    <section class="products" id="products-container">
+        <!-- Items will be loaded here dynamically from MySQL database -->
+    </section>
 
-    <button class="active" onclick="selectCategory(this)">All</button>
-    <button onclick="selectCategory(this)">Electronics</button>
-    <button onclick="selectCategory(this)">Vehicles</button>
-    <button onclick="selectCategory(this)">Fashion</button>
-    <button onclick="selectCategory(this)">Home Goods</button>
-    <button onclick="selectCategory(this)">Sports</button>
-    <button onclick="selectCategory(this)">Other</button>
+    <script>
+        let allItems = [];
 
-</div>
+        // Fetch items when the page loads
+        async function fetchListings() {
+            try {
+                const response = await fetch('http://localhost:5000/api/listings');
+                if (!response.ok) throw new Error('Failed to fetch');
+                allItems = await response.json();
+                renderListings(allItems);
+            } catch (err) {
+                console.error(err);
+                document.getElementById('products-container').innerHTML =
+                    '<p style="grid-column: 1/-1; text-align: center; color: red;">Failed to load listings. Check if backend server is running.</p>';
+            }
+        }
 
-<br>
+        function renderListings(items) {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
 
-<section class="products" id="products-container">
-    <!-- Items will be loaded here dynamically from MySQL database -->
-</section>
+            if (items.length === 0) {
+                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #666;">No items found.</p>';
+                return;
+            }
 
-<script>
-let allItems = [];
-
-// Fetch items when the page loads
-async function fetchListings() {
-    try {
-        const response = await fetch('http://localhost:5000/api/listings');
-        if (!response.ok) throw new Error('Failed to fetch');
-        allItems = await response.json();
-        renderListings(allItems);
-    } catch (err) {
-        console.error(err);
-        document.getElementById('products-container').innerHTML = 
-            '<p style="grid-column: 1/-1; text-align: center; color: red;">Failed to load listings. Check if backend server is running.</p>';
-    }
-}
-
-function renderListings(items) {
-    const container = document.getElementById('products-container');
-    container.innerHTML = '';
-
-    if (items.length === 0) {
-        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #666;">No items found.</p>';
-        return;
-    }
-
-    items.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.style.cursor = 'pointer';
-        card.onclick = () => {
-            window.location.href = `buyer-negotiator.html?id=${item.id}&price=${item.price}&title=${encodeURIComponent(item.title)}`;
-        };
-        card.innerHTML = `
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.cursor = 'pointer';
+                card.onclick = () => {
+                    window.location.href = `buyer-negotiator.html?id=${item.id}&price=${item.price}&title=${encodeURIComponent(item.title)}`;
+                };
+                card.innerHTML = `
             <img src="${item.image_url || 'https://images.unsplash.com/photo-1544717305-2782549b5136'}">
             <p style="line-height: 1.4;">
                 <span style="font-weight: bold; color: #333; font-size: 14px;">${escapeHTML(item.title)}</span><br>
@@ -141,48 +145,199 @@ function renderListings(items) {
                 <span style="font-size: 11px; text-transform: uppercase; color: #888;">${escapeHTML(item.category)}</span>
             </p>
         `;
-        container.appendChild(card);
-    });
-}
+                container.appendChild(card);
+            });
+        }
 
-function escapeHTML(str) {
-    if (!str) return '';
-    return str.replace(/[&<>'"]/g, 
-        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-    );
-}
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g,
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
 
-// Category filter logic
-function selectCategory(selected){
-    let buttons = document.querySelectorAll('.categories button');
-    buttons.forEach(function(btn){
-        btn.classList.remove('active');
-    });
-    selected.classList.add('active');
+        // Category filter logic
+        function selectCategory(selected) {
+            let buttons = document.querySelectorAll('.categories button');
+            buttons.forEach(function (btn) {
+                btn.classList.remove('active');
+            });
+            selected.classList.add('active');
 
-    const categoryText = selected.textContent.trim();
-    if (categoryText === 'All') {
-        renderListings(allItems);
-    } else {
-        const filtered = allItems.filter(item => item.category.toLowerCase() === categoryText.toLowerCase());
-        renderListings(filtered);
-    }
-}
+            const categoryText = selected.textContent.trim();
+            if (categoryText === 'All') {
+                renderListings(allItems);
+            } else {
+                const filtered = allItems.filter(item => item.category.toLowerCase() === categoryText.toLowerCase());
+                renderListings(filtered);
+            }
+        }
 
-// Search filter logic
-document.querySelector('input[placeholder*="Search listing"]').addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
-    const filtered = allItems.filter(item => 
-        item.title.toLowerCase().includes(query) || 
-        item.description.toLowerCase().includes(query) ||
-        item.category.toLowerCase().includes(query)
-    );
-    renderListings(filtered);
-});
+        // Search filter logic
+        document.querySelector('input[placeholder*="Search listing"]').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allItems.filter(item =>
+                item.title.toLowerCase().includes(query) ||
+                item.description.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            );
+            renderListings(filtered);
+        });
 
-// Run fetch on load
-window.addEventListener('DOMContentLoaded', fetchListings);
-</script>
+        // Run fetch on load
+        window.addEventListener('DOMContentLoaded', fetchListings);
+    </script>
 
+    <!-- ===================== LOGIN POPUP ===================== -->
+
+    <div id="loginPopup" class="popup-overlay">
+
+        <div class="popup-box">
+
+            <button class="close-popup" onclick="closeLoginPopup()">
+                &times;
+            </button>
+
+            <div class="popup-logo">
+
+                <img src="https://developers.google.com/identity/images/g-logo.png">
+
+            </div>
+
+            <h2>Welcome to Bargain AI</h2>
+
+            <p>
+                Sign in securely with your Google account to continue.
+            </p>
+
+            <div id="google-signin-btn" style="margin: 15px auto; display: flex; justify-content: center;"></div>
+
+            <p class="popup-footer">
+                Secure Authentication powered by Google
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+
+        /* Open Popup */
+
+        function openLoginPopup() {
+
+            document
+                .getElementById("loginPopup")
+                .classList.add("active");
+
+        }
+
+        /* Close Popup */
+
+        function closeLoginPopup() {
+
+            document
+                .getElementById("loginPopup")
+                .classList.remove("active");
+
+        }
+
+        /* Click Outside */
+
+        window.onclick = function (event) {
+
+            let popup = document.getElementById("loginPopup");
+
+            if (event.target === popup) {
+
+                popup.classList.remove("active");
+
+            }
+
+        }
+
+        /* Google Login */
+
+        function updateAuthUI() {
+            const token = localStorage.getItem("access_token");
+            const email = localStorage.getItem("email") || localStorage.getItem("username");
+            const authBtn = document.getElementById("auth-btn");
+            const userDisplay = document.getElementById("user-display");
+
+            if (token && email) {
+                userDisplay.textContent = email;
+                userDisplay.style.display = "inline-block";
+                authBtn.textContent = "Sign Out";
+            } else {
+                userDisplay.textContent = "";
+                userDisplay.style.display = "none";
+                authBtn.textContent = "Sign In";
+            }
+        }
+
+        function handleAuthClick() {
+            const token = localStorage.getItem("access_token");
+            if (token) {
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                localStorage.removeItem("username");
+                localStorage.removeItem("email");
+                alert("Logged out successfully!");
+                updateAuthUI();
+                window.location.reload();
+            } else {
+                openLoginPopup();
+            }
+        }
+
+        function handleCredentialResponse(response) {
+            fetch("http://127.0.0.1:8000/api/accounts/google/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ token: response.credential })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.access) {
+                        localStorage.setItem("access_token", data.access);
+                        localStorage.setItem("refresh_token", data.refresh);
+                        localStorage.setItem("username", data.username);
+                        localStorage.setItem("email", data.email || data.username);
+                        alert("Login successful!");
+                        closeLoginPopup();
+                        updateAuthUI();
+                    } else {
+                        alert("Login failed: " + (data.error || "Unknown error"));
+                    }
+                })
+                .catch(err => {
+                    console.error("Error:", err);
+                    alert("Error connecting to backend server");
+                });
+        }
+
+        window.addEventListener('load', () => {
+            google.accounts.id.initialize({
+                client_id: "934992826115-5t92edb6g7fak5r6qb1tgkgoojsvk4iu.apps.googleusercontent.com",
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("google-signin-btn"),
+                {
+                    theme: "filled_blue",
+                    size: "large",
+                    width: 250,
+                    text: "continue_with",
+                    shape: "rectangular"
+                }
+            );
+            updateAuthUI();
+        });
+
+    </script>
 </body>
+
 </html>

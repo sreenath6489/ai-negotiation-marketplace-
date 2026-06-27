@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from marketplace.models import Product
 
 
@@ -12,8 +12,8 @@ class Negotiation(models.Model):
         ('cancelled', 'Cancelled'),
     )
 
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer_negotiations')
-    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_negotiations')
+    buyer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='buyer_negotiations')
+    seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='seller_negotiations')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     current_offer = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')

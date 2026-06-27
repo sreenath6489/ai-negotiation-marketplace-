@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from orders import views
 
 urlpatterns = [
@@ -26,4 +26,5 @@ urlpatterns = [
     # REST APIs
     path('api/orders/', views.order_api, name='order_api'),
     path('api/reviews/', views.review_api, name='review_api'),
+    path('api/accounts/', include('accounts.urls')),
 ]

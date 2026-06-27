@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BargainAI | Login</title>
+
+    <link rel="stylesheet" href="signin.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="background">
+
+        <div class="floating circle1"></div>
+        <div class="floating circle2"></div>
+        <div class="floating circle3"></div>
+
+    </div>
+
+
+    <div class="login-container">
+
+        <div class="left-section">
+
+            <h1>🤝 BargainAI</h1>
+
+            <h2>AI Negotiation Marketplace</h2>
+
+            <p>
+
+                Buy smarter.
+                Sell faster.
+                Let AI negotiate the best deal for you.
+
+            </p>
+
+            <ul>
+
+                <li>🤖 AI Buyer Agent</li>
+
+                <li>💬 AI Seller Agent</li>
+
+                <li>⚡ Instant Negotiation</li>
+
+                <li>🔒 Secure Google Authentication</li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="right-section">
+
+            <div class="login-card">
+
+                <div class="logo">
+
+                    🤝
+
+                </div>
+
+                <h2>Welcome Back</h2>
+
+                <p>
+
+                    Sign in to continue to your AI Marketplace
+
+                </p>
+
+                <div id="google-signin-btn" style="margin-bottom: 20px; display: flex; justify-content: center;"></div>
+
+                <button class="back-btn" onclick="goBack()">
+
+                    ← Back to Marketplace
+
+                </button>
+
+                <div class="footer">
+
+                    Secure Login • Google OAuth • BargainAI
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+
+        function handleCredentialResponse(response) {
+            fetch("http://127.0.0.1:8000/api/accounts/google/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ token: response.credential })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.access) {
+                    localStorage.setItem("access_token", data.access);
+                    localStorage.setItem("refresh_token", data.refresh);
+                    localStorage.setItem("username", data.username);
+                    localStorage.setItem("email", data.email || data.username);
+                    alert("Login successful!");
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert("Login failed: " + (data.error || "Unknown error"));
+                }
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                alert("Error connecting to backend server");
+            });
+        }
+
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: "934992826115-5t92edb6g7fak5r6qb1tgkgoojsvk4iu.apps.googleusercontent.com",
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("google-signin-btn"),
+                { 
+                    theme: "filled_blue", 
+                    size: "large", 
+                    width: 320,
+                    text: "continue_with",
+                    shape: "rectangular"
+                }
+            );
+            google.accounts.id.prompt();
+        }
+
+        function goBack() {
+
+            window.location.href = "dashboard.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

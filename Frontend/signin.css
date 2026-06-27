@@ -1,0 +1,315 @@
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+body {
+
+    height: 100vh;
+    overflow: hidden;
+    background: #F7E7CE;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Background */
+
+.background {
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+}
+
+.floating {
+
+    position: absolute;
+    border-radius: 50%;
+    opacity: .15;
+
+}
+
+.circle1 {
+
+    width: 350px;
+    height: 350px;
+
+    background: #b55b74;
+
+    top: -80px;
+    left: -80px;
+
+}
+
+.circle2 {
+
+    width: 250px;
+    height: 250px;
+
+    background: #4d3427;
+
+    bottom: -70px;
+    right: -70px;
+
+}
+
+.circle3 {
+
+    width: 150px;
+    height: 150px;
+
+    background: #7c5a45;
+
+    top: 45%;
+    left: 40%;
+
+}
+
+/* Main */
+
+.login-container {
+
+    width: 1100px;
+    height: 620px;
+
+    display: flex;
+
+    border-radius: 30px;
+
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, .35);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .15);
+
+}
+
+/* Left */
+
+.left-section {
+
+    flex: 1;
+
+    padding: 70px;
+
+    background: linear-gradient(135deg, #4E342E, #7A5644);
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+}
+
+.left-section h1 {
+
+    font-size: 42px;
+
+    margin-bottom: 15px;
+
+}
+
+.left-section h2 {
+
+    font-size: 30px;
+
+    margin-bottom: 20px;
+
+}
+
+.left-section p {
+
+    font-size: 18px;
+
+    line-height: 32px;
+
+    margin-bottom: 30px;
+
+}
+
+.left-section ul {
+
+    list-style: none;
+
+}
+
+.left-section li {
+
+    margin-bottom: 18px;
+
+    font-size: 18px;
+
+}
+
+/* Right */
+
+.right-section {
+
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: #F7E7CE;
+
+}
+
+/* Card */
+
+.login-card {
+
+    width: 420px;
+
+    padding: 50px;
+
+    border-radius: 25px;
+
+    background: white;
+
+    text-align: center;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .12);
+
+}
+
+.logo {
+
+    font-size: 55px;
+
+    margin-bottom: 15px;
+
+}
+
+.login-card h2 {
+
+    font-size: 32px;
+
+    color: #4E342E;
+
+    margin-bottom: 10px;
+
+}
+
+.login-card p {
+
+    color: #666;
+
+    margin-bottom: 35px;
+
+    line-height: 28px;
+
+}
+
+/* Google Button */
+
+.google-btn {
+
+    width: 100%;
+    height: 56px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #4285F4;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 15px;
+
+    transition: .3s;
+
+}
+
+.google-btn img {
+
+    width: 25px;
+
+    background: white;
+
+    padding: 4px;
+
+    border-radius: 50%;
+
+}
+
+.google-btn:hover {
+
+    transform: translateY(-3px);
+
+    background: #2d6cdf;
+
+}
+
+/* Back */
+
+.back-btn {
+
+    margin-top: 18px;
+
+    width: 100%;
+
+    height: 52px;
+
+    border-radius: 12px;
+
+    background: white;
+
+    border: 2px solid #4E342E;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    color: #4E342E;
+
+    transition: .3s;
+
+}
+
+.back-btn:hover {
+
+    background: #4E342E;
+
+    color: white;
+
+}
+
+.footer {
+
+    margin-top: 35px;
+
+    font-size: 13px;
+
+    color: #999;
+
+}
