@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BargainAI Marketplace</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 16px;
+        }
+
+        .hero {
+            padding: 60px 50px;
+            background: linear-gradient(to right, #2563eb, #1e40af);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+        }
+
+        .section {
+            padding: 35px 50px;
+        }
+
+        .section h2 {
+            margin-bottom: 25px;
+        }
+
+        .products {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .product-card {
+            background: white;
+            width: 260px;
+            border-radius: 14px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+
+        .product-img {
+            height: 170px;
+            background: #dbeafe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .product-body {
+            padding: 18px;
+        }
+
+        .category {
+            color: #2563eb;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 16px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .sell-btn {
+            background: #16a34a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">BargainAI</div>
+    <div class="nav">
+        <a href="/">Marketplace</a>
+        <a href="/api/dashboard/negotiations-page/">My Negotiations</a>
+        <a href="/sell-item/">Sell Item</a>
+        <a href="/api/dashboard/buyer-page/">Buyer Dashboard</a>
+        <a href="/api/dashboard/seller-page/">Seller Dashboard</a>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>Buy, Sell & Negotiate with AI</h1>
+    <p>Find products, start smart negotiations, and close better deals.</p>
+    <a class="btn sell-btn" href="/sell-item/">Sell an Item</a>
+</div>
+
+<div class="section">
+    <h2>Available Products</h2>
+
+    <div class="products">
+        <div class="product-card">
+            <div class="product-img">💻</div>
+            <div class="product-body">
+                <div class="category">Electronics</div>
+                <h3>Laptop</h3>
+                <p>Good condition laptop for students.</p>
+                <div class="price">₹50,000</div>
+                <a class="btn" href="#">View Details</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img">📱</div>
+            <div class="product-body">
+                <div class="category">Mobiles</div>
+                <h3>Smartphone</h3>
+                <p>Used phone in excellent condition.</p>
+                <div class="price">₹18,000</div>
+                <a class="btn" href="#">View Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

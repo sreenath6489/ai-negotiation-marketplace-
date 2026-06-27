@@ -4,35 +4,29 @@
 
 {% block content %}
 
-<h1>Notifications</h1>
+<div class="main-card">
+    <h1 class="page-title">Notifications</h1>
+    <p class="subtitle">Stay updated with negotiation and marketplace activities.</p>
 
-<table border="1" cellpadding="12" cellspacing="0" width="100%" style="background:white;border-collapse:collapse;">
-    <tr style="background:#1f2937;color:white;">
-        <th>Title</th>
-        <th>Message</th>
-        <th>Status</th>
-        <th>Date</th>
-    </tr>
+    {% for notification in notifications %}
+    <div class="section-card">
+        <h3>{{ notification.title }}</h3>
+        <p>{{ notification.message }}</p>
 
-    {% for n in notifications %}
-    <tr>
-        <td>{{ n.title }}</td>
-        <td>{{ n.message }}</td>
-        <td>
-            {% if n.is_read %}
-                Read
-            {% else %}
-                Unread
-            {% endif %}
-        </td>
-        <td>{{ n.created_at }}</td>
-    </tr>
+        <small style="color:#7b6a61;">
+            {{ notification.created_at|date:"d M Y H:i" }}
+        </small>
+
+        {% if not notification.is_read %}
+        <span class="badge active" style="margin-left:15px;">New</span>
+        {% endif %}
+    </div>
     {% empty %}
-    <tr>
-        <td colspan="4">No notifications found.</td>
-    </tr>
+    <div class="section-card">
+        <p>No notifications available.</p>
+    </div>
     {% endfor %}
 
-</table>
+</div>
 
 {% endblock %}

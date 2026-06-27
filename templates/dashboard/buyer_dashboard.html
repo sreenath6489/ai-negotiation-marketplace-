@@ -4,33 +4,113 @@
 
 {% block content %}
 
-<h1>Buyer Dashboard</h1>
-<p>Welcome, {{ request.user.username }}</p>
+<div class="main-card">
+    <h1 class="page-title">Buyer Dashboard</h1>
+    <p class="subtitle">Welcome, {{ request.user.username }}. Track your negotiations, favourites, and accepted deals.</p>
 
-<div class="cards">
-    <div class="card">
-        <h2>{{ total_negotiations }}</h2>
-        <p>Total Negotiations</p>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h2>{{ total_negotiations }}</h2>
+            <p>Total Negotiations</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ active_negotiations }}</h2>
+            <p>Active Negotiations</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ accepted_deals }}</h2>
+            <p>Accepted Deals</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ favorite_products }}</h2>
+            <p>Favourite Products</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ unread_notifications }}</h2>
+            <p>Notifications</p>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>{{ active_negotiations }}</h2>
-        <p>Active Negotiations</p>
+  <div class="section-card">
+
+    <div class="section-title">
+        <h2>My Active Negotiations</h2>
+
+        <a class="brown-btn"
+           href="/api/dashboard/negotiations-page/">
+            View All
+        </a>
+
     </div>
 
-    <div class="card">
-        <h2>{{ accepted_deals }}</h2>
-        <p>Accepted Deals</p>
+    {% for n in recent_negotiations %}
+
+    <div style="
+        background:#f7efe7;
+        border-radius:18px;
+        padding:20px;
+        margin-bottom:18px;
+        border:1px solid #eadbcc;">
+
+        <h3>{{ n.product.title }}</h3>
+
+        <p>
+            <b>Seller :</b>
+            {{ n.seller.username }}
+        </p>
+
+        <p>
+            <b>Your Offer :</b>
+            ₹{{ n.current_offer }}
+        </p>
+
+        <span class="badge {{ n.status }}">
+            {{ n.status|title }}
+        </span>
+
+        <br><br>
+
+        <a class="brown-btn"
+           href="/api/dashboard/negotiations-page/">
+            Continue Negotiation
+        </a>
+
     </div>
 
-    <div class="card">
-        <h2>{{ favorite_products }}</h2>
-        <p>Favorite Products</p>
-    </div>
+    {% empty %}
 
-    <div class="card">
-        <h2>{{ unread_notifications }}</h2>
-        <p>Unread Notifications</p>
+    <p>No negotiations available.</p>
+
+    {% endfor %}
+
+</div>
+
+    <div class="section-card">
+
+<h2>Favourite Products</h2>
+
+<p style="color:#777;">
+
+Products saved from Marketplace will appear here.
+
+</p>
+
+<a class="brown-btn"
+href="/api/dashboard/favorites-page/">
+
+Open Favorites
+
+</a>
+
+</div>
+
+        <p style="color:#7b6a61;">
+            Your saved products will appear here after connecting with the marketplace.
+        </p>
     </div>
 </div>
 

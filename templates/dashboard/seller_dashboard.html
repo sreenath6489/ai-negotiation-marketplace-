@@ -4,28 +4,145 @@
 
 {% block content %}
 
-<h1>Seller Dashboard</h1>
-<p>Welcome, {{ request.user.username }}</p>
+<div class="main-card">
+    <h1 class="page-title">Seller Dashboard</h1>
+    <p class="subtitle">Welcome, {{ request.user.username }}. Manage your listings and buyer offers.</p>
 
-<div class="cards">
-    <div class="card">
-        <h2>{{ total_negotiations }}</h2>
-        <p>Total Negotiations</p>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h2>{{ my_products|length }}</h2>
+            <p>Total Listings</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ active_negotiations }}</h2>
+            <p>Active Offers</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ accepted_deals }}</h2>
+            <p>Accepted Deals</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ unread_notifications }}</h2>
+            <p>Notifications</p>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>{{ active_negotiations }}</h2>
-        <p>Active Negotiations</p>
+    <div class="section-card">
+        <div class="section-title">
+            <h2>My Listings</h2>
+            <a class="brown-btn" href="/api/dashboard/sell-item-page/">+ Add Listing</a>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:22px;">
+           {% for product in my_products %}
+<div style="background:#fff;border-radius:18px;overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,.08);">
+
+    {% if product.image %}
+        <img src="{{ product.image.url }}"
+             style="width:100%;
+             height:220px;
+             object-fit:cover;">
+    {% else %}
+        <img src="https://via.placeholder.com/400x220?text=No+Image"
+             style="width:100%;
+             height:220px;
+             object-fit:cover;">
+    {% endif %}
+
+    <div style="padding:20px;">
+
+        <h3>{{ product.title }}</h3>
+
+        <p style="color:#777;">
+            {{ product.category }}
+        </p>
+
+        <h2 style="color:#b8563c;">
+            ₹{{ product.price }}
+        </h2>
+
+        <p>
+            {{ product.description|truncatechars:70 }}
+        </p>
+
+        <div style="margin-top:15px;display:flex;gap:10px;">
+
+            <a href="#"
+               class="brown-btn">
+               View Offers
+            </a>
+
+            <a href="#"
+               class="btn">
+               Edit
+            </a>
+
+            <a href="#"
+               style="background:#dc2626;
+               color:white;
+               padding:10px 15px;
+               border-radius:8px;
+               text-decoration:none;">
+               Delete
+            </a>
+
+        </div>
+
     </div>
 
-    <div class="card">
-        <h2>{{ accepted_deals }}</h2>
-        <p>Accepted Deals</p>
+</div>
+{% empty %}
+<p>No products listed yet.</p>
+{% endfor %}
+
+                <h3 style="margin-top:18px;">{{ product.title }}</h3>
+                <p style="color:#7b6a61;">{{ product.category }}</p>
+                <h2 style="color:#b8563c;">₹{{ product.price }}</h2>
+                <p>{{ product.description|truncatechars:80 }}</p>
+
+                <a class="brown-btn" href="/api/dashboard/negotiations-page/">View Offers</a>
+            </div>
+            {% empty %}
+            <p>No listings yet. Add your first product.</p>
+            {% endfor %}
+        </div>
     </div>
 
-    <div class="card">
-        <h2>{{ unread_notifications }}</h2>
-        <p>Unread Notifications</p>
+    <div class="section-card">
+        <div class="section-title">
+            <h2>Recent Buyer Offers</h2>
+            <a class="brown-btn" href="/api/dashboard/negotiations-page/">View All</a>
+        </div>
+
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Buyer</th>
+                <th>Offer</th>
+                <th>Status</th>
+            </tr>
+
+            {% for n in recent_negotiations %}
+            <tr>
+                <td>{{ n.product.title }}</td>
+                <td>{{ n.buyer.username }}</td>
+                <td>₹{{ n.current_offer }}</td>
+                <td>
+                    <span class="badge {{ n.status }}">
+                        {{ n.status|title }}
+                    </span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No buyer offers yet.</td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </div>
 

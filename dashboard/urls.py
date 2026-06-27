@@ -21,4 +21,5 @@ urlpatterns = [
     path('negotiations-page/', views.negotiations_page),
     path('favorites-page/', views.favorites_page),
     path('notifications-page/', views.notifications_page),
+    path('sell-item-page/', views.sell_item_page),
 ]
