@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review</title>
+</head>
+<body>
+
+<h2>Review Product</h2>
+
+<p><strong>Product:</strong> {{ order.product_name }}</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Submit Review</button>
+</form>
+
+<br>
+
+<a href="{% url 'purchase_history' %}">Back to Purchase History</a>
+
+</body>
+</html>

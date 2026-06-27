@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice</title>
+</head>
+<body>
+
+<h2>Invoice</h2>
+
+<hr>
+
+<p><strong>Order ID:</strong> {{ order.id }}</p>
+<p><strong>Customer Name:</strong> {{ order.customer_name }}</p>
+<p><strong>Product Name:</strong> {{ order.product_name }}</p>
+<p><strong>Quantity:</strong> {{ order.quantity }}</p>
+<p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
+<p><strong>Status:</strong> {{ order.status }}</p>
+<p><strong>Order Date:</strong> {{ order.order_date }}</p>
+
+<hr>
+
+<a href="{% url 'purchase_history' %}">Back to Purchase History</a>
+
+</body>
+</html>
