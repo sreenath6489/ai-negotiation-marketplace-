@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setup Buyer Negotiator</title>
+<link rel="stylesheet" href="buyer-negotiator.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🤝 BargainAI
+    </div>
+
+    <div class="nav-links">
+        <a href="#">Marketplace</a>
+        <a href="#">My Negotiations</a>
+
+        
+        <a href="#">+ Sell Item</a>
+        
+    
+        <a href="dashboard.html" class="back-btn">Back</a>
+
+
+
+        <button class="logout-btn">Sign Out</button>
+        </div>
+
+</nav>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Setup Buyer Negotiator</h1>
+
+        <p class="subtitle" id="negotiator-subtitle">
+            Configure your AI agent's budget boundaries and negotiation tactics.
+        </p>
+
+        <label>Maximum Budget (₹)</label>
+
+        <input
+        type="number"
+        id="maxBudget"
+        placeholder="Quoted price is ₹50,000">
+
+        <small>
+            Your agent will never agree to a price higher than this.
+        </small>
+
+        <h3>Negotiation Strategy (Personality)</h3>
+
+        <div class="strategy active" data-strategy="Diplomat" onclick="selectStrategy(this)">
+            <h4>🤝 The Diplomat</h4>
+            <p>Win-win cooperative mindset. Seeks quick agreement around the middle.</p>
+        </div>
+
+        <div class="strategy" data-strategy="Shark" onclick="selectStrategy(this)">
+            <h4>🦈 The Shark</h4>
+            <p>Aggressive hardball negotiator. Stubborn and demands deep discounts.</p>
+        </div>
+
+        <div class="strategy" data-strategy="Frugal" onclick="selectStrategy(this)">
+            <h4>💰 The Frugal</h4>
+            <p>Value-oriented. Highlights flaws and leverages logistics for deals.</p>
+        </div>
+        
+
+        <button class="start-btn" id="initBtn">
+            Initialize AI Negotiator
+        </button>
+
+        
+
+    </div>
+
+</div>
+
+<script>
+// Parse URL query parameters
+const urlParams = new URLSearchParams(window.location.search);
+const itemId = urlParams.get('id');
+const itemPrice = urlParams.get('price');
+const itemTitle = urlParams.get('title');
+
+if (itemTitle && itemPrice) {
+    document.getElementById('negotiator-subtitle').innerHTML = 
+        `Configure your AI agent's boundaries to negotiate for <strong>${escapeHTML(itemTitle)}</strong>.`;
+    document.getElementById('maxBudget').placeholder = `Quoted price is ₹${Number(itemPrice).toLocaleString()}`;
+}
+
+function escapeHTML(str) {
+    if (!str) return '';
+    return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+    );
+}
+
+function selectStrategy(selected){
+    let cards = document.querySelectorAll('.strategy');
+    cards.forEach(function(card){
+        card.classList.remove('active');
+    });
+    selected.classList.add('active');
+}
+
+// Submit negotiator settings
+document.getElementById('initBtn').addEventListener('click', async () => {
+    const maxBudget = document.getElementById('maxBudget').value;
+    if (!maxBudget) {
+        alert('Please enter a maximum budget.');
+        return;
+    }
+
+    const activeStrategyCard = document.querySelector('.strategy.active');
+    const strategy = activeStrategyCard ? activeStrategyCard.getAttribute('data-strategy') : 'Diplomat';
+
+    try {
+        const response = await fetch('http://localhost:5000/api/buyer-negotiator', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                itemId: itemId ? parseInt(itemId) : null,
+                maxBudget: parseFloat(maxBudget),
+                strategy: strategy
+            })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            alert('AI Negotiator initialized successfully for this item!');
+            window.location.href = 'dashboard.html';
+        } else {
+            alert('Error: ' + (data.error || 'Failed to initialize negotiator.'));
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Could not connect to the backend server. Make sure node server.js is running.');
+    }
+});
+</script>
+
+</body>
+</html>

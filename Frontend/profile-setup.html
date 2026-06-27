@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Setup - BargainAI</title>
+    <link rel="stylesheet" href="profile-setup.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            🤝 BargainAI
+        </div>
+
+        <div class="nav-links">
+            
+            <a href="#">Marketplace</a>
+            
+            <a href="#">My Negotiations</a>
+
+            <a href="#">+Sell Item</a>
+
+            <a href="dashboard.html" class="back-btn">Back</a>
+
+            <button class="logout-btn">
+                Sign Out
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="profile-card">
+
+            <div class="avatar">
+                👤
+            </div>
+
+            <h1>Complete Profile Setup</h1>
+
+            <p class="subtitle">
+                We need a few more details to set up your BargainAI negotiation profile.
+            </p>
+
+            <form id="profileForm">
+
+                <label>Phone Number</label>
+
+                <input
+                type="text"
+                id="phone"
+                required>
+
+                <small>
+                    Used strictly for exchanging contact info in final agreed contracts.
+                </small>
+
+                <label>
+                    Location (City, State / Country)
+                </label>
+
+                <input
+                type="text"
+                id="location"
+                placeholder="San Francisco, CA"
+                required>
+
+                <small>
+                    Helps your AI agent negotiate local pickup, shipping, and distance convenience.
+                </small>
+
+                <button type="submit" class="start-btn">
+                    Get Started
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('phone').value;
+            const location = document.getElementById('location').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/profile-setup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ phone, location })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert('Profile setup complete!');
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to save profile.'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Could not connect to the backend server. Make sure node server.js is running.');
+            }
+        });
+    </script>
+
+</body>
+</html>
