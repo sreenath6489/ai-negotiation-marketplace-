@@ -2,11 +2,22 @@ from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+
 from marketplace.models import Product
 from negotiations.models import Negotiation
 from .models import Favorite, Notification
 from .serializers import FavoriteSerializer, NotificationSerializer, NegotiationSerializer
+from django.shortcuts import render
 
+def profile_setup(request):
+    if request.method == "POST":
+        request.user.phone = request.POST.get("phone")
+        request.user.location = request.POST.get("location")
+        request.user.save()
+
+        return redirect("/api/dashboard/sell-item-page/")
+
+    return render(request, "dashboard/profile_setup.html")
 
 @api_view(['GET'])
 def buyer_dashboard(request):
@@ -177,6 +188,12 @@ def notifications_page(request):
 
 
 def sell_item_page(request):
+    if not request.user.is_authenticated:
+        return redirect("/admin/login/")
+
+    if not request.user.phone or not request.user.location:
+        return redirect("/api/dashboard/profile-setup/")
+
     if request.method == "POST":
         Product.objects.create(
             seller=request.user,
@@ -186,6 +203,7 @@ def sell_item_page(request):
             description=request.POST.get("description"),
             image=request.FILES.get("image")
         )
-        return redirect("/api/dashboard/seller-page/")
+
+        return redirect("/")
 
     return render(request, "dashboard/sell_item.html")

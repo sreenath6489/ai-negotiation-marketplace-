@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ product.title }}</title>
+</head>
+
+<body style="font-family:Arial;background:#f4eadf;padding:40px;">
+
+<div style="max-width:900px;margin:auto;background:white;padding:30px;border-radius:20px;">
+
+    {% if product.image %}
+        <img src="{{ product.image.url }}"
+             style="width:100%;height:350px;object-fit:cover;border-radius:15px;">
+    {% endif %}
+
+    <h1>{{ product.title }}</h1>
+
+    <h2>₹{{ product.price }}</h2>
+
+    <p>{{ product.description }}</p>
+
+    <p>
+        <b>Seller:</b> {{ product.seller.username }}
+    </p>
+
+    <p>
+        <b>Location:</b> {{ product.seller.location }}
+    </p>
+
+    <br>
+
+    <a href="/api/dashboard/buyer-page/">
+        <button style="padding:15px 35px;
+                       background:#5a3525;
+                       color:white;
+                       border:none;
+                       border-radius:10px;
+                       font-size:18px;">
+            Start AI Negotiation
+        </button>
+    </a>
+
+</div>
+
+</body>
+</html>

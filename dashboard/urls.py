@@ -22,4 +22,6 @@ urlpatterns = [
     path('favorites-page/', views.favorites_page),
     path('notifications-page/', views.notifications_page),
     path('sell-item-page/', views.sell_item_page),
+    path("profile-setup/", views.profile_setup, name="profile_setup"),
+    path('profile-setup/', views.profile_setup, name='profile_setup'),
 ]
