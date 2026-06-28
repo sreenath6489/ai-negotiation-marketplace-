@@ -1,17 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Checkout</title>
-</head>
-<body>
-    <h2>Checkout Page</h2>
+{% extends 'base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+
+<div class="main-card">
+
+    <h2 class="text-center mb-4">🛒 Checkout Page</h2>
 
     <form method="POST">
         {% csrf_token %}
+
         {{ form.as_p }}
 
-        <button type="submit">Place Order</button>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-main">
+                Place Order
+            </button>
+        </div>
     </form>
 
-</body>
-</html>
+</div>
+
+{% endblock %}

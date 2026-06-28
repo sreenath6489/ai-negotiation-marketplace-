@@ -1,30 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Payment</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<h2>Payment Page</h2>
+{% block title %}Payment{% endblock %}
 
-{% for order in orders %}
+{% block content %}
 
-<p><strong>Customer:</strong> {{ order.customer_name }}</p>
-<p><strong>Product:</strong> {{ order.product_name }}</p>
-<p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
+<div class="main-card">
 
-<form method="post">
-    {% csrf_token %}
-    <input type="hidden" name="order_id" value="{{ order.id }}">
+    <h2 class="text-center mb-4">💳 Payment</h2>
 
-    <button type="submit">
-        Pay Now
-    </button>
-</form>
+    {% for order in orders %}
 
-<hr>
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
 
-{% endfor %}
+            <h5 class="card-title">Order #{{ order.id }}</h5>
 
-</body>
-</html>
+            <p><strong>Customer Name:</strong> {{ order.customer_name }}</p>
+
+            <p><strong>Product Name:</strong> {{ order.product_name }}</p>
+
+            <p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <input type="hidden" name="order_id" value="{{ order.id }}">
+
+                <button type="submit" class="btn btn-main">
+                    💳 Pay Now
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    {% empty %}
+
+    <div class="alert alert-warning text-center">
+        No pending payments found.
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
