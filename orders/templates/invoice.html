@@ -1,25 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Invoice</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<h2>Invoice</h2>
+{% block title %}Invoice{% endblock %}
 
-<hr>
+{% block content %}
 
-<p><strong>Order ID:</strong> {{ order.id }}</p>
-<p><strong>Customer Name:</strong> {{ order.customer_name }}</p>
-<p><strong>Product Name:</strong> {{ order.product_name }}</p>
-<p><strong>Quantity:</strong> {{ order.quantity }}</p>
-<p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
-<p><strong>Status:</strong> {{ order.status }}</p>
-<p><strong>Order Date:</strong> {{ order.order_date }}</p>
+<div class="main-card">
 
-<hr>
+    <h2 class="text-center mb-4">🧾 Invoice</h2>
 
-<a href="{% url 'purchase_history' %}">Back to Purchase History</a>
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>Order ID</th>
+            <td>{{ order.id }}</td>
+        </tr>
 
-</body>
-</html>
+        <tr>
+            <th>Customer Name</th>
+            <td>{{ order.customer_name }}</td>
+        </tr>
+
+        <tr>
+            <th>Product Name</th>
+            <td>{{ order.product_name }}</td>
+        </tr>
+
+        <tr>
+            <th>Quantity</th>
+            <td>{{ order.quantity }}</td>
+        </tr>
+
+        <tr>
+            <th>Total Amount</th>
+            <td>₹{{ order.total_amount }}</td>
+        </tr>
+
+        <tr>
+            <th>Status</th>
+            <td>{{ order.status }}</td>
+        </tr>
+
+        <tr>
+            <th>Order Date</th>
+            <td>{{ order.order_date }}</td>
+        </tr>
+    </table>
+
+    <div class="text-center mt-4">
+
+        <button onclick="window.print()" class="btn btn-main">
+            🖨 Print Invoice
+        </button>
+
+        <a href="{% url 'purchase_history' %}" class="btn btn-secondary ms-2">
+            ← Back
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

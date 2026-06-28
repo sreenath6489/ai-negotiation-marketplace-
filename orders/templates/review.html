@@ -1,25 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Review</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<h2>Review Product</h2>
+{% block title %}Review{% endblock %}
 
-<p><strong>Product:</strong> {{ order.product_name }}</p>
+{% block content %}
 
-<form method="post">
-    {% csrf_token %}
+<div class="main-card">
 
-    {{ form.as_p }}
+    <h2 class="text-center mb-4">⭐ Product Review</h2>
 
-    <button type="submit">Submit Review</button>
-</form>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
 
-<br>
+            <h5 class="card-title">Product Details</h5>
 
-<a href="{% url 'purchase_history' %}">Back to Purchase History</a>
+            <p><strong>Product Name:</strong> {{ order.product_name }}</p>
 
-</body>
-</html>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="text-center mt-4">
+
+            <button type="submit" class="btn btn-main">
+                ⭐ Submit Review
+            </button>
+
+            <a href="{% url 'purchase_history' %}" class="btn btn-secondary ms-2">
+                ← Back
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
