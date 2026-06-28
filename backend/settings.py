@@ -87,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ai_negotiation_marketplace',
         'USER': 'root',
-        'PASSWORD': 'Somu@2006',
+        'PASSWORD': 'Sheeba123*',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
