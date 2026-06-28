@@ -107,7 +107,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-USE_MYSQL = os.environ.get('USE_MYSQL', 'True').lower() in ('true', '1', 'yes')
+USE_MYSQL = False
 
 if USE_MYSQL:
     DATABASES = {
