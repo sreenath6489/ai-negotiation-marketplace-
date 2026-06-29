@@ -121,6 +121,13 @@ select{
     align-items:center;
 
     margin-top:10px;
+    cursor:pointer;
+    transition:background-color 0.2s, border-color 0.2s;
+}
+
+.upload-box:hover{
+    background-color:#faf7f3;
+    border-color:#b6493c;
 }
 
 .upload-icon{
