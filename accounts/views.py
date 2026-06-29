@@ -96,7 +96,7 @@ class GoogleLoginView(APIView):
             return Response({'error': 'Token is required'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Get settings Client ID or fallback to standard placeholder
-        client_id = getattr(settings, 'GOOGLE_CLIENT_ID', '793655183858-5c845tf7qgjadbt7q577g1bms95gtd62.apps.googleusercontent.com')
+        client_id = getattr(settings, 'GOOGLE_CLIENT_ID', '934992826115-5t92edb6g7fak5r6qb1tgkgoojsvk4iu.apps.googleusercontent.com')
 
         try:
             idinfo = verify_google_token(token, client_id)

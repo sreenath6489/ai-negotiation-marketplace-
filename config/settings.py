@@ -168,5 +168,5 @@ STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Google Authentication
-GOOGLE_CLIENT_ID = "793655183858-5c845tf7qgjadbt7q577g1bms95gtd62.apps.googleusercontent.com"
+GOOGLE_CLIENT_ID = "934992826115-5t92edb6g7fak5r6qb1tgkgoojsvk4iu.apps.googleusercontent.com"
 
