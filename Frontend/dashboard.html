@@ -320,6 +320,9 @@
         }
 
         window.addEventListener('load', () => {
+            if (window.location.protocol === 'file:') {
+                alert("WARNING: Google Authentication will NOT work if you open this file directly from the file explorer (file:// protocol).\n\nPlease access this page via the local server at http://localhost:5500/dashboard.html");
+            }
             google.accounts.id.initialize({
                 client_id: "793655183858-5c845tf7qgjadbt7q577g1bms95gtd62.apps.googleusercontent.com",
                 callback: handleCredentialResponse
